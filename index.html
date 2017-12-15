@@ -1,0 +1,122 @@
+<html>
+<head>
+<title>INSTASCOR</title>
+<link rel="stylesheet" href="css/uikit.almost-flat.css" />
+<link rel="stylesheet" href="css/uikit.almost-flat.min.css" />
+<link rel="stylesheet" href="css/uikit.css" />
+<link rel="stylesheet" href="css/main.css" />
+<link rel="stylesheet" href="css/uikit.gradient.css" />
+<link rel="stylesheet" href="css/uikit.gradient.min.css" />
+<link rel="stylesheet" href="css/uikit.min.css" />
+<link href="fonts/fontawesome-webfont.ttf" />
+<link href="fonts/fontawesome-webfont.woff" />
+<link href="fonts/fontawesome-webfont.woff2" />
+<link href="fonts/FontAwesome.otf" />
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Varela+Round" />
+<script src="js/main.js"></script>
+<script src="js/data.js"></script>
+<script src="js/corex/smoothscroll.js"></script>
+<script src="js/jquery .js"></script>
+<script src="js/uikit.min.js"></script>
+<script src="js/uikit.js"></script>
+<!-- Autocomplete CSS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+<link rel="stylesheet" href="css/components/autocomplete.css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="js/jquery-2.1.1.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.2.1/firebase.js"></script>
+
+
+
+
+<script src="https://www.gstatic.com/firebasejs/3.4.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyAilawdSJldK2Ts7aVnWZnMPq3izt4cwZs",
+    authDomain: "music-83b7b.firebaseapp.com",
+    databaseURL: "https://music-83b7b.firebaseio.com",
+    storageBucket: "music-83b7b.appspot.com",
+    messagingSenderId: "792970946112"
+  };
+  firebase.initializeApp(config);
+
+  var rootRef = firebase.database().ref();
+</script>
+
+
+
+<script language="JavaScript">
+
+  function processForm()
+    {
+      firebase.database().ref('/like/').on('value', function(snapshot) {
+          var like = snapshot.val().like;
+          $('#likevalue').html(like);
+      });
+      firebase.database().ref().on('value', function(snapshot) {
+      userDict = snapshot.val();
+      var countc = Object.keys(userDict).length-1;
+      $('#commentsc').html(countc);
+      });
+    }
+    processForm();
+
+
+
+  function myFunction() {
+    firebase.database().ref('/like/').once('value', function(snapshot) {
+      var like = snapshot.val().like;
+      $('#likevalue').html(like);
+      like++;
+      firebase.database().ref('/like/').set({ 'like': like});
+      var like = snapshot.val().like;
+      $('#likevalue').html(like);
+    });
+  }
+
+
+
+  function myFunction2() {
+    firebase.database().ref().once('value', function(snapshot) {
+    var input = document.getElementById("textdata").value;
+    rootRef.push({ 'comments': input});
+    alert("Your comments is sent us. Thanks for supporting.");
+    window.location.reload();
+  });
+  }
+
+</script>
+<body>
+
+  <div id="like">
+    <center>
+      <img src="img/like.png" id="liketext" onclick="myFunction()" /> <br> <br>
+      <h4 id="likevalue">00</h4>
+    </center>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <center>
+     <div class="uk-grid">
+       <div class="uk-width-3-4">
+         <input type="text" id="textdata" name="serialNumber" placeholder="Enter Your Comments..">
+       </div>
+       <div class="uk-width-1-4">
+         <h4 id="commentsc">00</h4>
+       </div>
+     </div>
+     <br>
+     <button id="buttondata" type="submit" value="Submit" onclick="myFunction2()">Send</button>
+     <br>
+     <br>
+    </center>
+  </div>
+</body>
+</html>
